@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Zstd compress | BEB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+  
+  <meta name="description" content="Go ztds encoding with marshalThis repository makes it possible to implement data compression without transformations on the side of the application code. Excellent tool for integration with different">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zstd compress">
+<meta property="og:url" content="http://example.com/2022/08/17/Zstd-compress/index.html">
+<meta property="og:site_name" content="BEB">
+<meta property="og:description" content="Go ztds encoding with marshalThis repository makes it possible to implement data compression without transformations on the side of the application code. Excellent tool for integration with different">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-08-17T03:32:23.000Z">
+<meta property="article:modified_time" content="2022-08-17T03:35:31.152Z">
+<meta property="article:author" content="Akhmed Osmanov">
+<meta name="twitter:card" content="summary"><meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="wrapper">
+    <header id="header">
+  <h1 id="title">
+    <a href="/">BEB</a>
+  </h1>
+  <nav>
+    
+    
+      
+      <a class="nav-link" href="/">Home</a>
+    
+      
+        <span class="nav-spacer">×</span>
+      
+      <a class="nav-link" href="/archives">Archives</a>
+    
+    
+  </nav>
+</header>
+
+    <div id="content">
+      <article id="post-Zstd-compress" class="article article-type-post" itemprop="blogPost" itemscope>
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h2 class="article-title" itemprop="headline name">
+      Zstd compress
+    </h2>
+  
+
+
+        <div class="article-meta">
+          <time class="article-date" datetime="2022-08-17T03:32:23.000Z" itemprop="datePublished">2022-08-17</time>
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        <h1 id="Go-ztds-encoding-with-marshal"><a href="#Go-ztds-encoding-with-marshal" class="headerlink" title="Go ztds encoding with marshal"></a>Go ztds encoding with marshal</h1><p>This repository makes it possible to implement data compression without transformations on the side of the application code. Excellent tool for integration with different data transfer protocols</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li>Zstd realtime compress algorithm -  <a target="_blank" rel="noopener" href="https://github.com/klauspost/compress/tree/master/zstd">zstd</a></li>
+</ul>
+<h2 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/akhmaos/zstd-marshal</span><br></pre></td></tr></table></figure>
+
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import zstdM &quot;zstd-marshal&quot;</span><br><span class="line"></span><br><span class="line">type SomeStruct struct &#123;</span><br><span class="line">	Field       string `json:&quot;Field&quot;`</span><br><span class="line">	SecondField string `json:&quot;SecondField&quot;`</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>We create some struct and set json tag for each because for parse struct we use json marshaling</p>
+<h3 id="Decode-and-encode-without-concurrency"><a href="#Decode-and-encode-without-concurrency" class="headerlink" title="Decode and encode without concurrency"></a>Decode and encode without concurrency</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">func EncodeAndDecode() &#123;</span><br><span class="line">	someData := SomeStruct&#123;</span><br><span class="line">		&quot;Test&quot;,</span><br><span class="line">		&quot;Test2&quot;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	encodedDataBytes, err := zstdM.Marshal(someData)</span><br><span class="line"></span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	var stForDecode SomeStruct</span><br><span class="line"></span><br><span class="line">	err = zstdM.Unmarshal(encodedDataBytes, &amp;stForDecode)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Decode-and-encode-with-concurrency"><a href="#Decode-and-encode-with-concurrency" class="headerlink" title="Decode and encode with concurrency"></a>Decode and encode with concurrency</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">func EncodeAndDecodeWithConcurrency() &#123;</span><br><span class="line">	someData := SomeStruct&#123;</span><br><span class="line">		&quot;Test&quot;,</span><br><span class="line">		&quot;Test2&quot;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	encodedDataBytes, err := zstdM.MarshalWithConcurrency(someData, runtime.GOMAXPROCS(-1))</span><br><span class="line"></span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	var stForDecode SomeStruct</span><br><span class="line"></span><br><span class="line">	err = zstdM.UnmarshalWithConcurrency(encodedDataBytes, &amp;stForDecode, runtime.GOMAXPROCS(-1))</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+  </div>
+</article>
+
+  
+<nav id="article-nav" class="article-nav">
+  
+    <span id="article-nav-newer" class="article-nav-link-wrap newer"></span>
+  
+  
+    <a href="/2022/08/17/Recaptcha/" id="article-nav-older" class="article-nav-link-wrap older">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">
+        
+          Recaptcha
+        
+      </div>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+    </div>
+  </div>
+  
+
+
+
+
+<div id="settings-container">
+  <div id="dark-mode">dark</div>
+  <div id="sans-font">sans</div>
+</div>
+<script type="text/javascript">
+let d=document,r=d.documentElement.style,f=r.setProperty.bind(r),l=localStorage,s=l.getItem('s')||(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),n=l.getItem('n'),m=d.getElementById("dark-mode"),b=()=>{f('--bg-color','#fafafa');f('--code-bg-color','#f4f4f4');f('--text-color','#212121');f('--secondary-color','#808080');f('--tertiary-color','#b0b0b0');f('--link-color','#b5c8cf');f('--link-hover-color','#618794');f('--link-bg-color','#dae4e7');f('--selection-color','#dae4e7');m.innerHTML="dark"},c=()=>{f('--bg-color','#212121');f('--code-bg-color','#292929');f('--text-color','#fff');f('--secondary-color','#c0c0c0');f('--tertiary-color','#6e6e6e');f('--link-color','#4d6b75');f('--link-hover-color','#96b1bb');f('--link-bg-color','#5d828e');f('--selection-color','#acc1c9');m.innerHTML="light"},o=d.getElementById("sans-font"),e=()=>{f('--body-stack','"Lora", "Georgia", "Times New Roman", serif');o.innerHTML="sans"},g=()=>{f('--body-stack','"Lato", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "Verdana", sans-serif');o.innerHTML="serif"};m.onclick=()=>{if(s==2){s=1;l.setItem('s',s);c()}else{s=2;l.setItem('s',s);b()}};o.onclick=()=>{if(n==2){n=1;l.setItem('n',n);g()}else{n=2;l.setItem('n',n);e()}};if(!s){s=2;l.setItem('s',2)};if(s==1){c()};if(!n){n=2;l.setItem('n',2)};if(n==1){g()};
+</script>
+
+
+
+
+</body>
+</html>
