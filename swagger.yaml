@@ -188,7 +188,7 @@ paths:
           schema:
             $ref: "#/definitions/error"
   /payment/check:
-    get:
+    post:
       tags:
         - Payment
       operationId: check transaction validate
