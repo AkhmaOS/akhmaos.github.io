@@ -193,7 +193,7 @@ paths:
         - Payment
       operationId: check transaction validate
       parameters:
-        - name: query
+        - name: body
           in: body
           schema:
             type: object
