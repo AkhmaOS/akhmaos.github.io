@@ -9,6 +9,7 @@ produces:
   - application/json
 schemes:
   - http
+host: hash.hach.dev
 
 securityDefinitions:
   sdkKey:
