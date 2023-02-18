@@ -156,7 +156,7 @@ paths:
     post:
       tags:
         - Payment
-      operationId: crypto tx hash for listen on backend
+      operationId: crypto approve
       parameters:
         - name: body
           in: body
