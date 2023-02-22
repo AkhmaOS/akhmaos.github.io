@@ -73,7 +73,7 @@ paths:
     post:
       tags:
         - Payment
-      operationId: init
+      operationId: casher init payment
       security:
         - sdkKey: []
       parameters:
@@ -126,7 +126,7 @@ paths:
     post:
       tags:
         - Payment
-      operationId: crypto-init
+      operationId: crypto init payment
       parameters:
         - name: body
           in: body
@@ -166,7 +166,7 @@ paths:
     post:
       tags:
         - Payment
-      operationId: crypto approve
+      operationId: crypto approve payment
       parameters:
         - name: body
           in: body
@@ -202,7 +202,7 @@ paths:
     post:
       tags:
         - Payment
-      operationId: check transaction validate
+      operationId: check transaction validate 
       parameters:
         - name: body
           in: body
