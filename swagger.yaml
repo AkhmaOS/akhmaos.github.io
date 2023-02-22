@@ -72,7 +72,7 @@ paths:
   /payment/casher/init:
     post:
       tags:
-        - Payment
+        - Casher
       operationId: casher init payment
       security:
         - sdkKey: []
@@ -125,7 +125,7 @@ paths:
   /payment/crypto/init:
     post:
       tags:
-        - Payment
+        - Crypto
       operationId: crypto init payment
       parameters:
         - name: body
@@ -165,7 +165,7 @@ paths:
   /payment/crypto/approve:
     post:
       tags:
-        - Payment
+        - Crypto
       operationId: crypto approve payment
       parameters:
         - name: body
@@ -198,10 +198,11 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
-  /payment/crypto/check:
+  /payment/crypto/validate:
     post:
       tags:
         - Payment
+        - Crypto
       operationId: check transaction validate 
       parameters:
         - name: body
@@ -332,10 +333,6 @@ definitions:
         description: uid of order
         example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
         type: string
-      validate:
-        description: count of validated blocks
-        example: 10
-        type: number
       approveProgress:
         description: current approved counts
         example: 3
