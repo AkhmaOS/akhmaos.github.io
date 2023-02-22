@@ -314,7 +314,7 @@ definitions:
     required:
       - paymentUrl
     properties:
-      orderUid:
+      paymentUrl:
         description: link to payment page
         example: "https://perevod.io/payment?order_id=00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
         type: string
