@@ -90,9 +90,9 @@ paths:
                 description: currency name
                 example: "rub"
                 type: string
-              orderUid:
-                description: id of the order
-                example: "00ff1c0e-f0c2-41b1-b94-224995c8bdfe"
+              casherOrderId:
+                description: id of the order on casher side
+                example: "00ff1c0e-f0c2-41b1-b94-224995c8bd12"
                 type: string
               payload:
                 description: json of the order (some fields)
