@@ -201,7 +201,6 @@ paths:
   /payment/crypto/validate:
     post:
       tags:
-        - Payment
         - Crypto
       operationId: check transaction validate 
       parameters:
