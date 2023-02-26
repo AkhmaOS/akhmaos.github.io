@@ -621,6 +621,8 @@ paths:
       tags:
         - Payment
       operationId: payment-crypto-init
+      security:
+        - {}
       description: '
       Нужна на стороне клиента, чтобы продолжить работу с заказом, который инициализировал касовый аппарат
       По флов, ручка вызвается в моменте сканирования QR кода клиентом
@@ -668,6 +670,8 @@ paths:
       operationId: payment-cashier-approve
       description: Нужна для подтверждения оплаты клиентом
       summary: payment-cashier-approve
+      security:
+        - { }
       parameters:
         - name: body
           in: body
@@ -706,6 +710,8 @@ paths:
       operationId: payment-crypto-validate
       description: Нужна для проверки успешности заказа
       summary: payment-crypto-validate
+      security:
+        - { }
       parameters:
         - name: body
           in: body
