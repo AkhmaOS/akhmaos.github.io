@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
-  description: "perevod payment api"
-  title: perevod
+  description: API платежной системы "Перевод"
+  title: Перевод
   version: 0.0.1
 consumes:
   - application/json
@@ -13,12 +13,12 @@ host: api-dev.perevod.io
 
 securityDefinitions:
   sdkKey:
-    description: SDK auth for bussiness clients
+    description: Используется для аутентификации касс
     type: apiKey
     in: header
     name: SDK-API-Key
   authKey:
-    description: JWT Auth for clients
+    description: Используется в админке и в клиентской части приложения
     type: apiKey
     in: header
     name: Authorization
@@ -29,6 +29,7 @@ security:
 paths:
   /healthCheck:
     get:
+      description: Нужен для проверки работоспособности серверной части
       tags:
         - Standard
       security:
@@ -42,12 +43,13 @@ paths:
             properties:
               ok:
                 type: boolean
-  /businessAuthCheck:
+  /authCheck:
     get:
+      description: Нужен для проверки работоспособности ключа авторизации
       tags:
         - Standard
       security:
-        - sdkKey: []
+        - { }
       operationId: authCheck
       responses:
         200:
@@ -72,8 +74,10 @@ paths:
   /business/add:
     post:
       tags:
-        - Business (Admin | Manager)
-      operationId: business connect to platform
+        - Business
+      operationId: add
+      description: Нужен для регистрации нового бизнеса в системе
+      summary: Требуется пермишен администратора либо модератора
       security:
         - authKey: []
       parameters:
@@ -121,8 +125,10 @@ paths:
   /business/suspend:
     post:
       tags:
-        - Business (Admin | Manager)
-      operationId: make business suspend of platform
+        - Business
+      description: Нужен для приостановления деятельности бизнеса в системе <h2 style="background-color:red">[Отключаются также все платежные терминалы]</h2>
+      summary: Требуется пермишен администратора либо модератора
+      operationId: suspend
       security:
         - authKey: [ ]
       parameters:
@@ -159,8 +165,10 @@ paths:
   /business/delete:
     post:
       tags:
-        - Business (Admin | Manager)
-      operationId: delete business from platform
+        - Business
+      operationId: delete
+      summary: Требуется премишен админа либо модератора
+      description: Нужен для удаления бизнеса в системе <h2 style="background-color:red">[Удаление невозможно при наличии активных терминалов]</h2>
       security:
         - authKey: [ ]
       parameters:
@@ -196,7 +204,9 @@ paths:
     get:
       tags:
         - Business
-      operationId: Gets a user by ID.
+      operationId: get
+      description: Нужен для получения бизнеса по UUID
+      summary: Требуется премишен админа либо модератора
       security:
         - authKey: [ ]
       parameters:
@@ -229,8 +239,10 @@ paths:
   /business/list:
     post:
       tags:
-        - Business (Admin | Maganer)
-      operationId: list of business
+        - Business
+      description: Выводит список бизнесов в системе
+      summary: Нужен пермишен администратора либо модератора
+      operationId: list
       security:
         - authKey: []
       parameters:
@@ -268,8 +280,8 @@ paths:
   /cashier/add:
     post:
       tags:
-        - Cashier (Admin | Manager)
-      operationId: add new cashier to platform
+        - Cashier
+      operationId: add-casher
       security:
         - authKey: []
       parameters:
@@ -922,23 +934,91 @@ definitions:
 
   business:
     type: object
+    required:
+      - businessName
+      - ownerName
+      - phoneNumber
+      - createdAt
+      - updatedAt
+      - isActive
+      - agreementDocumentLink
     properties:
-      value:
+      businessName:
+        description: business name
+        example: "Гостинная"
         type: string
-      operator:
-        description: "enum ==, !=, <, >, <=, >=, in, !in"
+      ownerName:
+        description: owner name
+        example: "Магомедов Магомед"
         type: string
-      ignoreCase:
+      phoneNumber:
+        description: phone number
+        example: "79991234213"
+        type: string
+      createdAt:
+        description: business connected to us timestamp
+        example: 213321321321
+        type: integer
+      updatedAt:
+        description: last business fields updated timestamp
+        example: 10321321321
+        type: number
+      isActive:
+        description: is active
+        example: true
         type: boolean
+      agreementDocumentLink:
+        description: url to agreement document
+        example: "https://some.ru/file.pdf"
+        type: string
   cashier:
     type: object
+    required:
+      - businessName
+      - lastConnectionTimestamp
+      - sdkKey
+      - deviceKey
+      - sdkVersion
+      - address
+      - isActive
+      - openTo
+      - openFrom
     properties:
-      value:
+      businessName:
+        description: business name
+        example: "Гостинная"
         type: string
-      operator:
-        description: "enum ==, !=, <, >, <=, >=, in, !in"
+      latestConnection:
+        description: timestamp of latest connection
+        example: 321321312
+        type: number
+      sdkKey:
+        description: sdk key of device
+        example: "321321321321"
         type: string
-      ignoreCase:
+      deviceKey:
+        description: device key
+        example: "213321321321"
+        type: string
+      sdkVersion:
+        description: version of device
+        example: "2.1"
+        type: string
+      address:
+        description: address of cashier
+        example: "Героев Дагестана 8"
+        type: string
+      openTo:
+        description: working end time "22:00" == 2200
+        example: 2200
+        type: number
+      openFrom:
+        description: working start time "10:00" == 1000
+        example: 1000
+        type: number
+      isActive:
+        description: is active
+        example: true
         type: boolean
   cashierConnect:
     type: object
@@ -947,7 +1027,3 @@ definitions:
         type: string
         example: "test-test"
         description: unique sdk key for cahier
-
-
-
-
