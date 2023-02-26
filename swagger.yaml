@@ -621,7 +621,10 @@ paths:
       tags:
         - Payment
       operationId: payment-crypto-init
-      description: Нужна на стороне клиента, подхватывае инициализированный заказ совершает с ним работу
+      description: '
+      Нужна на стороне клиента, чтобы продолжить работу с заказом, который инициализировал касовый аппарат
+      По флов, ручка вызвается в моменте сканирования QR кода клиентом
+      '
       summary: payment-crypto-init
       parameters:
         - name: body
