@@ -9,7 +9,8 @@ produces:
   - application/json
 schemes:
   - https
-host: api-dev.perevod.io
+host: api-stub.perevod.io
+basePath: /api/v2
 
 securityDefinitions:
   sdkKey:
