@@ -72,7 +72,7 @@ paths:
   /business/add:
     post:
       tags:
-        - Business
+        - Business (Admin | Manager)
       operationId: business connect to platform
       security:
         - authKey: []
@@ -121,7 +121,7 @@ paths:
   /business/suspend:
     post:
       tags:
-        - Business
+        - Business (Admin | Manager)
       operationId: make business suspend of platform
       security:
         - authKey: [ ]
@@ -159,7 +159,7 @@ paths:
   /business/delete:
     post:
       tags:
-        - Business
+        - Business (Admin | Manager)
       operationId: delete business from platform
       security:
         - authKey: [ ]
@@ -229,7 +229,7 @@ paths:
   /business/list:
     post:
       tags:
-        - Business
+        - Business (Admin | Maganer)
       operationId: list of business
       security:
         - authKey: []
@@ -268,7 +268,7 @@ paths:
   /cashier/add:
     post:
       tags:
-        - Cashier
+        - Cashier (Admin | Manager)
       operationId: add new cashier to platform
       security:
         - authKey: []
@@ -326,8 +326,8 @@ paths:
   /cashier/suspend:
     post:
       tags:
-        - Cashier
-      operationId: make cahier suspend of platform
+        - Cashier (Admin | Manager)
+      operationId: make cahier suspend on platform
       security:
         - authKey: []
       parameters:
@@ -362,7 +362,7 @@ paths:
   /cashier/delete:
     post:
       tags:
-        - Cashier
+        - Cashier (Admin | Manager)
       operationId: delete cahier
       security:
         - authKey: [ ]
@@ -398,7 +398,7 @@ paths:
   /cashier/{cashierUuid}:
     get:
       tags:
-        - Cashier
+        - Cashier (Business | Admin | Manager)
       operationId: get cashier by uuid
       security:
         - authKey: [ ]
@@ -432,7 +432,7 @@ paths:
   /cashier/list:
     post:
       tags:
-        - Cashier
+        - Cashier (Business | Admin | Manager)
       operationId: list of cashier
       security:
         - authKey: [ ]
@@ -507,7 +507,7 @@ paths:
   /payment/casher/init:
     post:
       tags:
-        - Casher
+        - Payment (Cashier)
       operationId: casher init payment
       security:
         - sdkKey: []
@@ -556,7 +556,7 @@ paths:
   /payment/casher/print:
     get:
       tags:
-        - Casher
+        - Payment (Cashier)
       operationId: casher print payment
       security:
         - sdkKey: []
@@ -571,7 +571,6 @@ paths:
           required: true
           type: string
           description: uid of order
-
       responses:
         200:
           description: ok
@@ -596,7 +595,7 @@ paths:
   /payment/crypto/init:
     post:
       tags:
-        - Crypto
+        - Payment (Client)
       operationId: crypto init payment
       parameters:
         - name: body
@@ -636,7 +635,7 @@ paths:
   /payment/crypto/approve:
     post:
       tags:
-        - Crypto
+        - Payment (Client)
       operationId: crypto approve payment
       parameters:
         - name: body
@@ -948,7 +947,3 @@ definitions:
         type: string
         example: "test-test"
         description: unique sdk key for cahier
-
-
-
-
