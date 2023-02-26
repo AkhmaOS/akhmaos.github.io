@@ -256,12 +256,10 @@ paths:
         200:
           description: business list
           schema:
-            type: object
-            properties:
+            items:
+              type: array
               items:
-                type: array
-                items:
-                  $ref: "#/definitions/business"
+                $ref: "#/definitions/business"
         400:
           description: bad request
           schema:
@@ -459,7 +457,7 @@ paths:
       description: Нужна для получения списка касс
       summary: cashier-list
       security:
-        - authKey: [ ]
+        - authKey: []
       parameters:
         - name: body
           in: body
@@ -469,12 +467,9 @@ paths:
         200:
           description: cashier list
           schema:
-            type: object
-            properties:
+              type: array
               items:
-                type: array
-                items:
-                  $ref: "#/definitions/cashier"
+                $ref: "#/definitions/cashier"
         400:
           description: bad request
           schema:
@@ -625,9 +620,9 @@ paths:
     post:
       tags:
         - Payment
-      operationId: payment-cashier-init
+      operationId: payment-crypto-init
       description: Нужна на стороне клиента, подхватывае инициализированный заказ совершает с ним работу
-      summary: payment-cashier-init
+      summary: payment-crypto-init
       parameters:
         - name: body
           in: body
