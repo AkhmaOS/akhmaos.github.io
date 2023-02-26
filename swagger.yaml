@@ -24,14 +24,14 @@ securityDefinitions:
     name: Authorization
 
 security:
-  - sdkKey: []
+  - sdkKey: [ ]
 
 paths:
   /healthCheck:
     get:
       description: Нужен для проверки работоспособности серверной части
       summary: health-check
-      operationId:  health-check
+      operationId: health-check
       tags:
         - Standard
       security:
@@ -48,7 +48,7 @@ paths:
     get:
       description: Нужен для проверки работоспособности ключа авторизации
       summary: auth-check
-      operationId:  auth-check
+      operationId: auth-check
       tags:
         - Standard
       security:
@@ -81,7 +81,7 @@ paths:
       description: Нужен для регистрации нового бизнеса в системе
       summary: business-add
       security:
-        - authKey: []
+        - authKey: [ ]
       parameters:
         - name: body
           in: body
@@ -100,7 +100,7 @@ paths:
                 description: legal name of busines owner
                 example: "Магомедов Магомед"
                 type: string
-              agreementDocumentUri:
+              agreementDocumentUrl:
                 description: url to agreement document
                 type: string
       responses:
@@ -246,7 +246,7 @@ paths:
       summary: business-list
       operationId: business-list
       security:
-        - authKey: []
+        - authKey: [ ]
       parameters:
         - name: body
           in: body
@@ -285,7 +285,7 @@ paths:
       operationId: cashier-add
       summary: cashier-add
       security:
-        - authKey: []
+        - authKey: [ ]
       parameters:
         - name: body
           in: body
@@ -345,7 +345,7 @@ paths:
       operationId: cashier-suspend
       summary: cashier-suspend
       security:
-        - authKey: []
+        - authKey: [ ]
       parameters:
         - name: body
           in: body
@@ -457,7 +457,7 @@ paths:
       description: Нужна для получения списка касс
       summary: cashier-list
       security:
-        - authKey: []
+        - authKey: [ ]
       parameters:
         - name: body
           in: body
@@ -467,9 +467,9 @@ paths:
         200:
           description: cashier list
           schema:
-              type: array
-              items:
-                $ref: "#/definitions/cashier"
+            type: array
+            items:
+              $ref: "#/definitions/cashier"
         400:
           description: bad request
           schema:
@@ -532,7 +532,7 @@ paths:
       description: Нужна для инициализации нового заказа кассой
       summary: payment-cashier-init
       security:
-        - sdkKey: []
+        - sdkKey: [ ]
       parameters:
         - name: body
           in: body
@@ -583,7 +583,7 @@ paths:
       description: Нужна для того чтобы показать клиенту чек
       summary: payment-cashier-print
       security:
-        - sdkKey: []
+        - sdkKey: [ ]
       parameters:
         - in: query
           name: orderUid
@@ -959,7 +959,7 @@ definitions:
       - createdAt
       - updatedAt
       - isActive
-      - agreementDocumentLink
+      - agreementDocumentUrl
     properties:
       businessName:
         description: business name
@@ -985,7 +985,7 @@ definitions:
         description: is active
         example: true
         type: boolean
-      agreementDocumentLink:
+      agreementDocumentUrl:
         description: url to agreement document
         example: "https://some.ru/file.pdf"
         type: string
