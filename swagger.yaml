@@ -1026,7 +1026,7 @@ definitions:
         example: "321321321321"
         type: string
       deviceId:
-        description: device key
+        description: device id
         example: "213321321321"
         type: string
       sdkVersion:
