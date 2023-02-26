@@ -1006,7 +1006,7 @@ definitions:
       - businessName
       - lastConnectionTimestamp
       - sdkKey
-      - deviceKey
+      - deviceId
       - sdkVersion
       - address
       - isActive
@@ -1025,7 +1025,7 @@ definitions:
         description: sdk key of device
         example: "321321321321"
         type: string
-      deviceKey:
+      deviceId:
         description: device key
         example: "213321321321"
         type: string
