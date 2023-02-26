@@ -570,7 +570,7 @@ paths:
           name: type
           required: true
           type: string
-          description: uid of order
+          description: paper | screen
       responses:
         200:
           description: ok
@@ -846,7 +846,7 @@ definitions:
       - payload
     properties:
       paperType:
-        description: payload if chosed type is paper pritn
+        description: payload if chosed type is paper print
         example: '{
                   "type": "print",
                   "payload": {
