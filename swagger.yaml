@@ -671,7 +671,7 @@ paths:
   /payment/crypto/validate:
     post:
       tags:
-        - Crypto
+        - Payment (Client)
       operationId: check transaction validate
       parameters:
         - name: body
@@ -947,3 +947,7 @@ definitions:
         type: string
         example: "test-test"
         description: unique sdk key for cahier
+
+
+
+
