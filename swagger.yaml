@@ -69,6 +69,441 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+  /business/add:
+    post:
+      tags:
+        - Business
+      operationId: business connect to platform
+      security:
+        - authKey: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              businessLegalName:
+                description: business legal name
+                example: "Кофейня Гостинная"
+                type: string
+              phoneNumber:
+                description: Phone number of business
+                example: "7999231123"
+                type: string
+              ownerLegalName:
+                description: legal name of busines owner
+                example: "Магомедов Магомед"
+                type: string
+              agreementDocumentUri:
+                description: url to agreement document
+                type: string
+      responses:
+        200:
+          description: business succesfully added
+          schema:
+            $ref: "#/definitions/business"
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  /business/suspend:
+    post:
+      tags:
+        - Business
+      operationId: make business suspend of platform
+      security:
+        - authKey: [ ]
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              id:
+                description: id of business
+                example: 10
+                type: number
+
+      responses:
+        200:
+          description: business succesfully suspended
+
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  /business/delete:
+    post:
+      tags:
+        - Business
+      operationId: delete business from platform
+      security:
+        - authKey: [ ]
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              id:
+                description: id of business
+                example: 10
+                type: number
+      responses:
+        200:
+          description: business succesfully deleted
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  /business/{businessUid}:
+    get:
+      tags:
+        - Business
+      operationId: Gets a user by ID.
+      security:
+        - authKey: [ ]
+      parameters:
+        - in: path
+          name: businessUid
+          type: string
+          required: true
+          description: uid of business
+      responses:
+        200:
+          description: business
+          schema:
+            $ref: "#/definitions/business"
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  /business/list:
+    post:
+      tags:
+        - Business
+      operationId: list of business
+      security:
+        - authKey: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/listParams"
+      responses:
+        200:
+          description: business list
+          schema:
+            type: object
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: "#/definitions/business"
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+
+  /cashier/add:
+    post:
+      tags:
+        - Cashier
+      operationId: add new cashier to platform
+      security:
+        - authKey: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              businessUuid:
+                description: id of business
+                example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
+                type: string
+              address:
+                description: cashier location
+                example: "Героев Дагестана 8"
+                type: string
+              openFrom:
+                description: shop work start time
+                example: 1000
+                type: number
+              openTo:
+                description: shop work end time
+                example: 2000
+                type: number
+              sdkKey:
+                description: sdk key of cashier
+                example: "test"
+                type: string
+              sdkVersion:
+                description: sdk version
+                example: "1.0"
+                type: string
+      responses:
+        200:
+          description: cashier succesfully added
+          schema:
+            $ref: "#/definitions/cashier"
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  /cashier/suspend:
+    post:
+      tags:
+        - Cashier
+      operationId: make cahier suspend of platform
+      security:
+        - authKey: []
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              id:
+                description: uuid of business
+                example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
+                type: string
+      responses:
+        200:
+          description: cashier succesfully suspended
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  /cashier/delete:
+    post:
+      tags:
+        - Cashier
+      operationId: delete cahier
+      security:
+        - authKey: [ ]
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              id:
+                description: uuid of business
+                example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
+                type: string
+      responses:
+        200:
+          description: business succesfully suspended
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  /cashier/{cashierUuid}:
+    get:
+      tags:
+        - Cashier
+      operationId: get cashier by uuid
+      security:
+        - authKey: [ ]
+      parameters:
+        - in: path
+          name: cashierUuid
+          type: string
+          required: true
+          description: uid of cashier
+      responses:
+        200:
+          description: cashier
+          schema:
+            $ref: "#/definitions/cashier"
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  /cashier/list:
+    post:
+      tags:
+        - Cashier
+      operationId: list of cashier
+      security:
+        - authKey: [ ]
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/listParams"
+      responses:
+        200:
+          description: cashier list
+          schema:
+            type: object
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: "#/definitions/cashier"
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  /cashier/connect:
+    post:
+      tags:
+        - Cashier
+      operationId: Cashier Connect
+      summary: For check cashier auth
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              deviceId:
+                description: id of device
+                example: "321321"
+                type: string
+      responses:
+        200:
+          description: success response for connect
+          schema:
+            $ref: "#/definitions/cashierConnect"
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
   /payment/casher/init:
     post:
       tags:
@@ -90,10 +525,6 @@ paths:
                 description: currency name
                 example: "rub"
                 type: string
-              casherOrderId:
-                description: id of the order on casher side
-                example: "00ff1c0e-f0c2-41b1-b94-224995c8bd12"
-                type: string
               payload:
                 description: json of the order (some fields)
                 example: {
@@ -106,6 +537,46 @@ paths:
           description: ok
           schema:
             $ref: "#/definitions/paymentInit"
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+  /payment/casher/print:
+    get:
+      tags:
+        - Casher
+      operationId: casher print payment
+      security:
+        - sdkKey: []
+      parameters:
+        - in: query
+          name: orderUid
+          type: string
+          required: true
+          description: uid of order
+        - in: query
+          name: type
+          required: true
+          type: string
+          description: uid of order
+
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: "#/definitions/paymentPrint"
         400:
           description: bad request
           schema:
@@ -202,7 +673,7 @@ paths:
     post:
       tags:
         - Crypto
-      operationId: check transaction validate 
+      operationId: check transaction validate
       parameters:
         - name: body
           in: body
@@ -246,7 +717,7 @@ definitions:
       code:
         description: either same as HTTP Status Code OR >= 600.
         type: integer
-        format: int16
+        format: int32
       message:
         type: string
   permissionDenied:
@@ -258,7 +729,7 @@ definitions:
       code:
         default: 403
         type: integer
-        format: int16
+        format: int32
       message:
         description: permission denied reason
         default: permission denied
@@ -272,7 +743,7 @@ definitions:
       code:
         default: 400
         type: integer
-        format: int16
+        format: int32
       message:
         description: bad request reason
         default: bad request
@@ -311,18 +782,19 @@ definitions:
   paymentInit:
     type: object
     required:
-      - paymentUrl
+      - orderUuid
     properties:
-      paymentUrl:
-        description: link to payment page
-        example: "https://perevod.io/payment?order_id=00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
+      orderUid:
+        description: uuid of order
+        example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
         type: string
   paymentCheck:
     type: object
     required:
       - orderUid
-      - validate
       - txHash
+      - approveProgress
+      - approvesCount
     properties:
       txHash:
         description: hash of transaction
@@ -335,34 +807,32 @@ definitions:
       approveProgress:
         description: current approved counts
         example: 3
-        type: number  
+        type: number
       approvesCount:
         description: max approves count
         example: 10
-        type: number      
+        type: number
   paymentCryptoApprove:
     type: object
     required:
       - rps
-      - approveProgress
-      - approvesCount
       - token
       - txHash
       - orderUid
       - tokenedAmount
     properties:
       txHash:
-          description: hash of tx
-          example: "0x49ce4bbfcb1354100a6c3e4d97047e39d05e20a1e67bf8b6093d28f54a96de61"
-          type: string
+        description: hash of tx
+        example: "0x49ce4bbfcb1354100a6c3e4d97047e39d05e20a1e67bf8b6093d28f54a96de61"
+        type: string
       orderUid:
-          description: uid of order
-          example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
-          type: string
+        description: uid of order
+        example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
+        type: string
       token:
-          description: token name
-          example: eth
-          type: string
+        description: token name
+        example: eth
+        type: string
       tokenedAmount:
         description: count of tokens for order
         example: "0.001"
@@ -371,4 +841,114 @@ definitions:
         description: requeest per seconds for order validate
         example: 10
         type: number
-      
+  paymentPrint:
+    type: object
+    required:
+      - payload
+    properties:
+      paperType:
+        description: payload if chosed type is paper pritn
+        example: '{
+                  "type": "print",
+                  "payload": {
+                    "uuid": 46464646,
+                    "request": [
+                      {
+                        "type": "nonFiscal",
+                        "items": [
+                          {
+                            "type": "text",
+                            "text": "Текст свободной форме",
+                            "alignment": "left | center | right"
+                          },
+                          {
+                            "type": "barcode",
+                            "barcode": "тут гр код",
+                            "barcodeType": "QR",
+                            "scale": 6
+                          }
+                        
+                        ]
+                      }
+                    ]
+                  }
+                }'
+        type: object
+      screenType:
+        description: payload if chosed type is paper print
+        example: "https://someurl.perevod.io/00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
+  listParams:
+    type: object
+    description: params for list method
+    properties:
+      limit:
+        type: integer
+        minimum: 1
+      offset:
+        type: integer
+        minimum: 0
+      filterGroups:
+        type: array
+        items:
+          $ref: "#/definitions/filterGroup"
+      sortBy:
+        type: string
+      orderBy:
+        type: string
+        enum: [ ASC, DESC ]
+  filterGroup:
+    type: object
+    description: params for grouping filters
+    properties:
+      key:
+        type: string
+      logicFilter:
+        description: "Comparing option: true == 'AND', false == 'OR'"
+        type: boolean
+      filters:
+        type: array
+        items:
+          $ref: "#/definitions/filter"
+
+  filter:
+    type: object
+    properties:
+      value:
+        type: string
+      operator:
+        description: "enum ==, !=, <, >, <=, >=, in, !in"
+        type: string
+      ignoreCase:
+        type: boolean
+
+  business:
+    type: object
+    properties:
+      value:
+        type: string
+      operator:
+        description: "enum ==, !=, <, >, <=, >=, in, !in"
+        type: string
+      ignoreCase:
+        type: boolean
+  cashier:
+    type: object
+    properties:
+      value:
+        type: string
+      operator:
+        description: "enum ==, !=, <, >, <=, >=, in, !in"
+        type: string
+      ignoreCase:
+        type: boolean
+  cashierConnect:
+    type: object
+    properties:
+      sdkKey:
+        type: string
+        example: "test-test"
+        description: unique sdk key for cahier
+
+
+
+
