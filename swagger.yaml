@@ -341,7 +341,7 @@ paths:
   /cashier/suspend:
     post:
       tags:
-        - Cashier (Admin | Manager)
+        - Cashier
       operationId: make cahier suspend on platform
       summary: cashier-suspend
       security:
@@ -378,7 +378,7 @@ paths:
   /cashier/delete:
     post:
       tags:
-        - Cashier (Admin | Manager)
+        - Cashier
       operationId: delete cahier
       summary: cashier-delete
       security:
@@ -415,7 +415,7 @@ paths:
   /cashier/{cashierUuid}:
     get:
       tags:
-        - Cashier (Business | Admin | Manager)
+        - Cashier
       operationId: get cashier by uuid
       summary: cashier-get
       security:
@@ -450,7 +450,7 @@ paths:
   /cashier/list:
     post:
       tags:
-        - Cashier (Business | Admin | Manager)
+        - Cashier
       operationId: list of cashier
       summary: cashier-list
       security:
@@ -526,7 +526,7 @@ paths:
   /payment/casher/init:
     post:
       tags:
-        - Payment (Cashier)
+        - Payment
       operationId: casher init payment
       summary: payment-cashier-init
       security:
@@ -576,7 +576,7 @@ paths:
   /payment/casher/print:
     get:
       tags:
-        - Payment (Cashier)
+        - Payment
       operationId: casher print payment
       summary: payment-cashier-print
       security:
@@ -616,7 +616,7 @@ paths:
   /payment/crypto/init:
     post:
       tags:
-        - Payment (Client)
+        - Payment
       operationId: crypto init payment
       summary: payment-cashier-init
       parameters:
@@ -657,7 +657,7 @@ paths:
   /payment/crypto/approve:
     post:
       tags:
-        - Payment (Client)
+        - Payment
       operationId: crypto approve payment
       summary: payment-cashier-approve
       parameters:
@@ -694,7 +694,7 @@ paths:
   /payment/crypto/validate:
     post:
       tags:
-        - Payment (Client)
+        - Payment
       operationId: check transaction validate
       summary: payment-crypto-validate
       parameters:
