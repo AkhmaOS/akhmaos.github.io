@@ -30,6 +30,7 @@ paths:
   /healthCheck:
     get:
       description: Нужен для проверки работоспособности серверной части
+      summary: health-check
       tags:
         - Standard
       security:
@@ -46,6 +47,7 @@ paths:
   /authCheck:
     get:
       description: Нужен для проверки работоспособности ключа авторизации
+      summary: auth-check
       tags:
         - Standard
       security:
@@ -77,7 +79,7 @@ paths:
         - Business
       operationId: add
       description: Нужен для регистрации нового бизнеса в системе
-      summary: Требуется пермишен администратора либо модератора
+      summary: business-add
       security:
         - authKey: []
       parameters:
@@ -127,7 +129,7 @@ paths:
       tags:
         - Business
       description: Нужен для приостановления деятельности бизнеса в системе <h2 style="background-color:red">[Отключаются также все платежные терминалы]</h2>
-      summary: Требуется пермишен администратора либо модератора
+      summary: business-suspend
       operationId: suspend
       security:
         - authKey: [ ]
@@ -167,7 +169,7 @@ paths:
       tags:
         - Business
       operationId: delete
-      summary: Требуется премишен админа либо модератора
+      summary: business-delete
       description: Нужен для удаления бизнеса в системе <h2 style="background-color:red">[Удаление невозможно при наличии активных терминалов]</h2>
       security:
         - authKey: [ ]
@@ -206,7 +208,7 @@ paths:
         - Business
       operationId: get
       description: Нужен для получения бизнеса по UUID
-      summary: Требуется премишен админа либо модератора
+      summary: business-get
       security:
         - authKey: [ ]
       parameters:
@@ -241,7 +243,7 @@ paths:
       tags:
         - Business
       description: Выводит список бизнесов в системе
-      summary: Нужен пермишен администратора либо модератора
+      summary: business-list
       operationId: list
       security:
         - authKey: []
@@ -281,7 +283,8 @@ paths:
     post:
       tags:
         - Cashier
-      operationId: add-casher
+      operationId: add
+      summary: cashier-add
       security:
         - authKey: []
       parameters:
@@ -340,6 +343,7 @@ paths:
       tags:
         - Cashier (Admin | Manager)
       operationId: make cahier suspend on platform
+      summary: cashier-suspend
       security:
         - authKey: []
       parameters:
@@ -376,6 +380,7 @@ paths:
       tags:
         - Cashier (Admin | Manager)
       operationId: delete cahier
+      summary: cashier-delete
       security:
         - authKey: [ ]
       parameters:
@@ -412,6 +417,7 @@ paths:
       tags:
         - Cashier (Business | Admin | Manager)
       operationId: get cashier by uuid
+      summary: cashier-get
       security:
         - authKey: [ ]
       parameters:
@@ -446,6 +452,7 @@ paths:
       tags:
         - Cashier (Business | Admin | Manager)
       operationId: list of cashier
+      summary: cashier-list
       security:
         - authKey: [ ]
       parameters:
@@ -484,7 +491,7 @@ paths:
       tags:
         - Cashier
       operationId: Cashier Connect
-      summary: For check cashier auth
+      summary: cashier-connect
       parameters:
         - name: body
           in: body
@@ -521,6 +528,7 @@ paths:
       tags:
         - Payment (Cashier)
       operationId: casher init payment
+      summary: payment-cashier-init
       security:
         - sdkKey: []
       parameters:
@@ -570,6 +578,7 @@ paths:
       tags:
         - Payment (Cashier)
       operationId: casher print payment
+      summary: payment-cashier-print
       security:
         - sdkKey: []
       parameters:
@@ -609,6 +618,7 @@ paths:
       tags:
         - Payment (Client)
       operationId: crypto init payment
+      summary: payment-cashier-init
       parameters:
         - name: body
           in: body
@@ -649,6 +659,7 @@ paths:
       tags:
         - Payment (Client)
       operationId: crypto approve payment
+      summary: payment-cashier-approve
       parameters:
         - name: body
           in: body
@@ -685,6 +696,7 @@ paths:
       tags:
         - Payment (Client)
       operationId: check transaction validate
+      summary: payment-crypto-validate
       parameters:
         - name: body
           in: body
