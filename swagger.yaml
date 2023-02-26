@@ -882,10 +882,11 @@ definitions:
   paymentPrint:
     type: object
     required:
-      - payload
+      - paperPrint
+      - screenPrint
     properties:
-      paperType:
-        description: payload if chosed type is paper print
+      paperPrint:
+        description: Если выбран тип "paper"
         example: '{
                   "type": "print",
                   "payload": {
@@ -912,8 +913,8 @@ definitions:
                   }
                 }'
         type: object
-      screenType:
-        description: payload if chosed type is paper print
+      screenPrint:
+        description: Если выбран тип "screen"
         example: "https://someurl.perevod.io/00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
   listParams:
     type: object
