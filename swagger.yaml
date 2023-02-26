@@ -709,7 +709,7 @@ paths:
       tags:
         - Payment
       operationId: payment-crypto-validate
-      description: Нужна для проверки успешности заказа
+      description: Нужна для проверки успешности транзакции
       summary: payment-crypto-validate
       security:
         - { }
