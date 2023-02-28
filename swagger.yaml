@@ -669,7 +669,7 @@ paths:
         - Payment
       operationId: payment-crypto-approve
       description: Нужна для подтверждения оплаты клиентом
-      summary: payment-cashier-approve
+      summary: payment-crypto-approve
       security:
         - { }
       parameters:
