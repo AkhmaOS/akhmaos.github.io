@@ -9,7 +9,7 @@ produces:
   - application/json
 schemes:
   - https
-host: api-stub.perevod.io
+host: api-stub.perevod.io:8443
 basePath: /api/v2
 
 securityDefinitions:
