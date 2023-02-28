@@ -525,7 +525,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
-  /payment/casher/init:
+  /payment/cashier/init:
     post:
       tags:
         - Payment
@@ -576,7 +576,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
-  /payment/casher/print:
+  /payment/cashier/print:
     get:
       tags:
         - Payment
