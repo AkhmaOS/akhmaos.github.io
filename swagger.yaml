@@ -668,7 +668,7 @@ paths:
     post:
       tags:
         - Payment
-      operationId: payment-cashier-approve
+      operationId: payment-crypto-approve
       description: Нужна для подтверждения оплаты клиентом
       summary: payment-cashier-approve
       security:
