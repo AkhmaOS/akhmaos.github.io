@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   description: API платежной системы "Перевод"
-  title: Перевод
+  title: Perevod
   version: 0.0.1
 consumes:
   - application/json
@@ -203,7 +203,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
-  /business/{businessUid}:
+  /business/{businessUuid}:
     get:
       tags:
         - Business
@@ -214,10 +214,10 @@ paths:
         - authKey: [ ]
       parameters:
         - in: path
-          name: businessUid
+          name: businessUuid
           type: string
           required: true
-          description: uid of business
+          description: uuid of business
       responses:
         200:
           description: business
@@ -427,7 +427,7 @@ paths:
           name: cashierUuid
           type: string
           required: true
-          description: uid of cashier
+          description: uuid of cashier
       responses:
         200:
           description: cashier
@@ -493,11 +493,15 @@ paths:
       operationId: cashier-connect
       description: Нужна для получения кассой sdkKey, чтобы в дальнейшем делать запросы по инициализации заказа и получения информации по чеку
       summary: cashier-connect
+      security:
+        - { }
       parameters:
         - name: body
           in: body
           schema:
             type: object
+            required:
+              - deviceId
             properties:
               deviceId:
                 description: id of device
@@ -538,6 +542,9 @@ paths:
           in: body
           schema:
             type: object
+            required:
+              - amount
+              - currency
             properties:
               amount:
                 description: amount of payment
@@ -589,7 +596,7 @@ paths:
           name: orderUuid
           type: string
           required: true
-          description: uid of order
+          description: uuid of order
         - in: query
           name: type
           required: true
@@ -622,7 +629,7 @@ paths:
         - Payment
       operationId: payment-crypto-init
       security:
-        - {}
+        - authKey: []
       description: '
       Нужна на стороне клиента, чтобы продолжить работу с заказом, который инициализировал касовый аппарат
       По флов, ручка вызвается в моменте сканирования QR кода клиентом
@@ -631,8 +638,13 @@ paths:
       parameters:
         - name: body
           in: body
+            
           schema:
             type: object
+            required:
+            - network
+            - token
+            - orderUuid
             properties:
               network:
                 description: network name
@@ -643,7 +655,7 @@ paths:
                 example: eth
                 type: string
               orderUuid:
-                description: uid of order
+                description: uuid of order
                 example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
                 type: string
       responses:
@@ -671,15 +683,18 @@ paths:
       description: Нужна для подтверждения оплаты клиентом
       summary: payment-crypto-approve
       security:
-        - { }
+        - authKey: []
       parameters:
         - name: body
           in: body
           schema:
             type: object
+            required:
+              - orderUuid
+              - txHash
             properties:
               orderUuid:
-                description: uid of order
+                description: uuid of order
                 example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
                 type: string
               txHash:
@@ -711,15 +726,18 @@ paths:
       description: Нужна для проверки успешности транзакции
       summary: payment-crypto-validate
       security:
-        - { }
+        - authKey: []
       parameters:
         - name: body
           in: body
           schema:
+            required:
+              - orderUuid
+              - txHash
             type: object
             properties:
               orderUuid:
-                description: uid of order
+                description: uuid of order
                 example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
                 type: string
               txHash:
@@ -796,6 +814,8 @@ definitions:
       - orderUuid
       - wallet
       - tokenedAmount
+      - amount
+      - currency
     properties:
       network:
         description: network name
@@ -806,7 +826,7 @@ definitions:
         example: eth
         type: string
       orderUuid:
-        description: uid of order
+        description: uuid of order
         example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
         type: string
       wallet:
@@ -816,6 +836,14 @@ definitions:
       tokenedAmount:
         description: count of tokens for order
         example: "0.001"
+        type: string
+      amount:
+        description: amount of payment
+        example: "99"
+        type: string
+      currency:
+        description: currency of amount
+        example: "rub"
         type: string
   paymentInit:
     type: object
@@ -839,17 +867,17 @@ definitions:
         example: "0x49ce4bbfcb1354100a6c3e4d97047e39d05e20a1e67bf8b6093d28f54a96de61"
         type: string
       orderUuid:
-        description: uid of order
+        description: uuid of order
         example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
         type: string
       approveProgress:
         description: current approved counts
         example: 3
-        type: number
+        type: integer
       approvesCount:
         description: max approves count
         example: 10
-        type: number
+        type: integer
   paymentCryptoApprove:
     type: object
     required:
@@ -864,7 +892,7 @@ definitions:
         example: "0x49ce4bbfcb1354100a6c3e4d97047e39d05e20a1e67bf8b6093d28f54a96de61"
         type: string
       orderUuid:
-        description: uid of order
+        description: uuid of order
         example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
         type: string
       token:
@@ -878,7 +906,7 @@ definitions:
       rps:
         description: requeest per seconds for order validate
         example: 10
-        type: number
+        type: integer
   paymentPrint:
     type: object
     required:
