@@ -762,6 +762,42 @@ paths:
           schema:
             $ref: "#/definitions/error"
 
+  /payment/crypto/price/{orderUuid}:
+    get:
+      description: Получение обновленной цены по orderuuid
+      summary: payment-price
+      operationId: payment-price
+      tags:
+        - Payment
+      security:
+        - authKey: []
+      parameters:
+        - in: path
+          name: orderUuid
+          type: string
+          required: true
+          description: uuid of order
+      responses:
+        200:
+          description: cashier
+          schema:
+            $ref: "#/definitions/paymentCryptoPrice"
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
 
 definitions:
   error:
@@ -1083,3 +1119,38 @@ definitions:
         type: string
         example: "test-test"
         description: unique sdk key for cahier
+
+  paymentCryptoPrice:
+    type: object
+    required:
+      - network
+      - token
+      - orderUuid
+      - tokenedAmount
+      - amount
+      - currency
+    properties:
+      network:
+        description: network name
+        type: string
+        example: eth
+      token:
+        description: token name
+        example: eth
+        type: string
+      orderUuid:
+        description: uuid of order
+        example: "00ff1c0e-f0c2-41b1-b940-224995c8bdfe"
+        type: string
+      tokenedAmount:
+        description: count of tokens for order
+        example: "0.001"
+        type: string
+      amount:
+        description: amount of payment
+        example: "99"
+        type: string
+      currency:
+        description: currency of amount
+        example: "rub"
+        type: string
