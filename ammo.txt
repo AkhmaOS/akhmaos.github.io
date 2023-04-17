@@ -1,0 +1,13 @@
+POST //315d4c71-acc7-4ba5-afed-7b05f94d7cc5/eth/sepolia HTTP/1.1
+Content-Type: application/json
+Host: 195.19.101.73:8001
+Content-Length: 163
+
+{
+"method": "eth_getTransactionByHash",
+  "params": [
+    "0x2dcc9029083bac26202ed4f185cf3c3bcc63635374644c9d6ba844ae2aba19ea"
+  ],
+  "id": 1,
+  "jsonrpc": "2.0"
+}
