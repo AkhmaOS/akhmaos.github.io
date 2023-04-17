@@ -1,4 +1,4 @@
-POST //315d4c71-acc7-4ba5-afed-7b05f94d7cc5/eth/sepolia HTTP/1.1
+POST /315d4c71-acc7-4ba5-afed-7b05f94d7cc5/eth/sepolia HTTP/1.1
 Content-Type: application/json
 Host: 195.19.101.73:8001
 Content-Length: 163
