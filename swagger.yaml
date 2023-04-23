@@ -799,7 +799,7 @@ paths:
           schema:
             $ref: "#/definitions/error"
 
-  /crypto/payment/wallets:
+  /payment/crypto/wallets:
     get:
       tags:
         - Payment
