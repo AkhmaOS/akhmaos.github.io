@@ -638,7 +638,7 @@ paths:
       parameters:
         - name: body
           in: body
-            
+          required: true
           schema:
             type: object
             required:
@@ -798,6 +798,40 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
+  /crypto/payment/wallets:
+    get:
+      tags:
+        - Payment
+      description: Выводит список поддерживаеммых кошельков
+      summary: wallet-list
+      operationId: wallet-list
+      security:
+        - authKey: [ ]
+      responses:
+        200:
+          description: wallet list
+          schema:
+              type: array
+              items:
+                $ref: "#/definitions/wallet"
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+
 
 definitions:
   error:
@@ -1153,4 +1187,18 @@ definitions:
       currency:
         description: currency of amount
         example: "rub"
+        type: string
+  wallet:
+    type: object
+    required:
+      - network
+      - token
+    properties:
+      network:
+        description: network name
+        type: string
+        example: eth
+      token:
+        description: token name
+        example: eth
         type: string
