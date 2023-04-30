@@ -649,7 +649,7 @@ paths:
               chainId:
                 description: chainId goerli = 5
                 example: 5
-                type: number
+                type: integer
               token:
                 description: token name
                 example: eth
@@ -889,7 +889,7 @@ definitions:
     properties:
       chainId:
         description: chainId goerli = 5
-        type: number
+        type: integer
         example: 5
       token:
         description: token name
@@ -1166,7 +1166,7 @@ definitions:
     properties:
       chainId:
         description: chainId goerli = 5
-        type: number
+        type: integer
         example: 5
       token:
         description: token name
@@ -1196,7 +1196,7 @@ definitions:
     properties:
       chainId:
         description: chain id ex eth goerli = 5
-        type: number
+        type: integer
         example: 5
       token:
         description: token name
