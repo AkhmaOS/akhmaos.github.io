@@ -1191,7 +1191,7 @@ definitions:
   wallet:
     type: object
     required:
-      - network
+      - chainId
       - token
     properties:
       chainId:
