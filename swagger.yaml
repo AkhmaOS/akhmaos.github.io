@@ -1194,10 +1194,10 @@ definitions:
       - network
       - token
     properties:
-      network:
-        description: network name
-        type: string
-        example: eth
+      chainId:
+        description: chain id ex eth goerli = 5
+        type: number
+        example: 5
       token:
         description: token name
         example: eth
