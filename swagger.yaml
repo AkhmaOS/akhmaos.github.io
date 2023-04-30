@@ -642,14 +642,14 @@ paths:
           schema:
             type: object
             required:
-            - network
+            - chainId
             - token
             - orderUuid
             properties:
-              network:
-                description: network name
-                example: eth
-                type: string
+              chainId:
+                description: chainId goerli = 5
+                example: 5
+                type: number
               token:
                 description: token name
                 example: eth
@@ -879,7 +879,7 @@ definitions:
   paymentCryptoInit:
     type: object
     required:
-      - network
+      - chainId
       - token
       - orderUuid
       - wallet
@@ -887,10 +887,10 @@ definitions:
       - amount
       - currency
     properties:
-      network:
-        description: network name
-        type: string
-        example: eth
+      chainId:
+        description: chainId goerli = 5
+        type: number
+        example: 5
       token:
         description: token name
         example: eth
@@ -1157,17 +1157,17 @@ definitions:
   paymentCryptoPrice:
     type: object
     required:
-      - network
+      - chainId
       - token
       - orderUuid
       - tokenedAmount
       - amount
       - currency
     properties:
-      network:
-        description: network name
-        type: string
-        example: eth
+      chainId:
+        description: chainId goerli = 5
+        type: number
+        example: 5
       token:
         description: token name
         example: eth
