@@ -28,6 +28,7 @@ security:
   - sdkKey: [ ]
 
 paths:
+
   /healthCheck:
     get:
       description: Нужен для проверки работоспособности серверной части
@@ -45,6 +46,7 @@ paths:
             properties:
               ok:
                 type: boolean
+
   /authCheck:
     get:
       description: Нужен для проверки работоспособности ключа авторизации
@@ -74,6 +76,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /business/add:
     post:
       tags:
@@ -125,6 +128,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /business/suspend:
     post:
       tags:
@@ -144,7 +148,6 @@ paths:
                 description: id of business
                 example: 10
                 type: number
-
       responses:
         200:
           description: business succesfully suspended
@@ -165,6 +168,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /business/delete:
     post:
       tags:
@@ -203,6 +207,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /business/{businessUuid}:
     get:
       tags:
@@ -239,6 +244,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /business/list:
     post:
       tags:
@@ -337,6 +343,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /cashier/suspend:
     post:
       tags:
@@ -375,6 +382,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /cashier/delete:
     post:
       tags:
@@ -413,6 +421,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /cashier/{cashierUuid}:
     get:
       tags:
@@ -449,6 +458,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /cashier/list:
     post:
       tags:
@@ -486,6 +496,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /cashier/connect:
     post:
       tags:
@@ -528,6 +539,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /payment/cashier/init:
     post:
       tags:
@@ -582,6 +594,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /payment/cashier/print:
     get:
       tags:
@@ -623,6 +636,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /payment/crypto/init:
     post:
       tags:
@@ -675,6 +689,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /payment/crypto/approve:
     post:
       tags:
@@ -718,6 +733,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+
   /payment/crypto/validate:
     post:
       tags:
@@ -815,6 +831,45 @@ paths:
               type: array
               items:
                 $ref: "#/definitions/wallet"
+        400:
+          description: bad request
+          schema:
+            $ref: "#/definitions/badRequest"
+        403:
+          description: permission denied
+          schema:
+            $ref: "#/definitions/permissionDenied"
+        500:
+          description: internal server error
+          schema:
+            $ref: "#/definitions/internalServerError"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+
+  /admin/payments:
+    get:
+      tags:
+        - Admin
+      description: """Выводит список платежей по терминалам и банкам
+      Если вызывет бизнеса то в ответ идут только платежи которые относятся к этому бизнесу,
+      Если вызывает админ, то выводятся все платежи"""
+      summary: cashier-list
+      operationId: cashier-list
+      security:
+        - authKey: [ ]
+      parameters:
+        - in: query
+          name: timestamp
+          type: string
+          required: true
+          description: timestamp(time.now() - 1 day), выведет платежи за последние сутки
+      responses:
+        200:
+          description: cashier payment list
+          schema:
+              $ref: "#/definitions/adminPayment"
         400:
           description: bad request
           schema:
@@ -1097,6 +1152,7 @@ definitions:
         description: url to agreement document
         example: "https://some.ru/file.pdf"
         type: string
+  
   cashier:
     type: object
     required:
@@ -1146,6 +1202,7 @@ definitions:
         description: is active
         example: true
         type: boolean
+
   cashierConnect:
     type: object
     properties:
@@ -1188,6 +1245,7 @@ definitions:
         description: currency of amount
         example: "rub"
         type: string
+
   wallet:
     type: object
     required:
@@ -1202,3 +1260,86 @@ definitions:
         description: token name
         example: eth
         type: string
+  
+
+  adminPayment:
+    type: object
+    required:
+      - bankPayment
+      - cashierPayment
+    properties:
+      bankPayment:
+        type: array
+        items:
+          $ref: "#/definitions/bankPayment"
+      cashierPayment:
+        type: array
+        items:
+          $ref: "#/definitions/cashierPayment"
+
+  cashierPayment:
+    type: object
+    required:
+      - sortId
+      - uuid
+      - timestamp
+      - businessName
+      - bankName 
+      - amount
+      - status
+    properties:
+      sortId:
+        description: field for matching with bank payment 
+        type: integer
+        example: 1
+      uuid:
+        description: payment id
+        example: "uuid-example"
+        type: string
+      timestamp:
+        description: timestamp of payment create
+        type: integer
+        example: 1232132131
+      businessName: 
+        type: string
+        example: "Test"
+      bankName:
+        type: string
+        example: "tinkoff"
+      amount: 
+        type: string
+        example: "102.31"
+      status: 
+        type: string
+        example: "PAYED"
+
+  bankPayment:
+    type: object
+    required:
+      - sortId
+      - id
+      - timestamp
+      - amount
+      - status
+      - bankName
+    properties:
+      sortId:
+        description: id for match with cashier payments
+        type: integer
+        example: 1
+      id:
+        description: id of payment in bank system
+        example: "213213dsadsaF"
+        type: string
+      timestamp:
+        type: integer
+        example: 12321
+      amount:
+        type: string
+        example: "21.12"
+      status:
+        type: string
+        example: "some status from api (какой дадут такой и верну, пока сам хз что там у них есть)"
+      bankName: 
+        type: string
+        example: "tinkoff"
