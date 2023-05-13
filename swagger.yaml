@@ -852,11 +852,9 @@ paths:
     get:
       tags:
         - Admin
-      description: """Выводит список платежей по терминалам и банкам
-      Если вызывет бизнеса то в ответ идут только платежи которые относятся к этому бизнесу,
-      Если вызывает админ, то выводятся все платежи"""
-      summary: cashier-list
-      operationId: cashier-list
+      description: Выводит список платежей по терминалам и банкам. Если вызывет бизнеса то в ответ идут только платежи которые относятся к этому бизнесу. Если вызывает админ, то выводятся все платежи
+      summary: admin-cashier-list
+      operationId: admin-cashier-list
       security:
         - authKey: [ ]
       parameters:
@@ -869,7 +867,9 @@ paths:
         200:
           description: cashier payment list
           schema:
-              $ref: "#/definitions/adminPayment"
+              type: array
+              items:
+                $ref: "#/definitions/adminPaymentsByDate"
         400:
           description: bad request
           schema:
@@ -1276,25 +1276,33 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/cashierPayment"
+    
+  adminPaymentsByDate:
+    type: object
+    required:
+      - date
+      - payments
+    properties:
+      date:
+        type: string
+        example: "2020-12-10"
+      payments:
+        $ref: "#/definitions/adminPayment"
+        
 
   cashierPayment:
     type: object
     required:
-      - sortId
-      - uuid
+      - id
       - timestamp
       - businessName
       - bankName 
       - amount
       - status
     properties:
-      sortId:
-        description: field for matching with bank payment 
-        type: integer
-        example: 1
-      uuid:
+      id:
         description: payment id
-        example: "uuid-example"
+        example: "213213dsadsaF"
         type: string
       timestamp:
         description: timestamp of payment create
@@ -1316,19 +1324,14 @@ definitions:
   bankPayment:
     type: object
     required:
-      - sortId
       - id
       - timestamp
       - amount
       - status
       - bankName
     properties:
-      sortId:
-        description: id for match with cashier payments
-        type: integer
-        example: 1
       id:
-        description: id of payment in bank system
+        description: id of payment
         example: "213213dsadsaF"
         type: string
       timestamp:
